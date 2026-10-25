@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<title>CIENCIA // Explora el universo</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #080b18;
+  --panel: #10162a;
+  --text: #f4f6ff;
+  --muted: #a8b0ce;
+  --cyan: #73f0e5;
+  --purple: #a99bff;
+  --line: rgba(255,255,255,.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse at 15% 10%, #17264b 0, transparent 40%),
+    radial-gradient(ellipse at 90% 75%, #251744 0, transparent 38%),
+    #080b18;
+}
+
+body:after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: .2;
+  pointer-events: none;
+  background-image: radial-gradient(#fff 1px, transparent 1px);
+  background-size: 47px 47px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.wrap {
+  width: min(1120px, 92%);
+  margin: auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-family: 'Space Grotesk';
+  font-weight: 700;
+  letter-spacing: 2px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.brand-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  color: #080b18;
+  font-size: 19px;
+}
+
+.tag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+
+.hero {
+  padding: 72px 0 48px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 30px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  border: 1px solid #3d566d;
+  background: #12223699;
+  color: var(--cyan);
+  border-radius: 50px;
+  padding: 9px 14px;
+  font-size: 12px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--cyan);
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1 {
+  font-family: 'Space Grotesk';
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: .98;
+  letter-spacing: -3px;
+  margin: 24px 0;
+}
+
+.gradient {
+  background: linear-gradient(100deg, #fff 10%, var(--cyan) 52%, var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.intro {
+  max-width: 540px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 14px;
+  padding: 13px 18px;
+  font-weight: 700;
+  transition: .25s;
+}
+
+.btn-primary {
+  background: linear-gradient(100deg, var(--cyan), #b6fff5);
+  color: #09121d;
+  box-shadow: 0 8px 30px #73f0e526;
+}
+
+.btn-ghost {
+  background: #ffffff0b;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.btn:hover, .card:hover {
+  transform: translateY(-4px);
+}
+
+.orbit {
+  min-height: 330px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.planet {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #e5fdff, #74cbdc 15%, #4655a9 48%, #16132d 74%);
+  box-shadow: inset -25px -20px 45px #030513, 0 0 70px #716bff44;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+
+.planet:before {
+  content: "";
+  position: absolute;
+  width: 330px;
+  height: 85px;
+  border: 2px solid #9f9affaa;
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  left: -55px;
+  top: 70px;
+  box-shadow: 0 0 22px #a99bff33;
+}
+
+.planet:after {
+  content: "";
+  position: absolute;
+  inset: 25px 15px;
+  border-radius: 50%;
+  border: 1px solid #ffffff20;
+  transform: rotate(35deg);
+}
+
+.orbit-label {
+  position: absolute;
+  right: 2%;
+  bottom: 5%;
+  padding: 12px 16px;
+  background: #11182bd9;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  font-size: 12px;
+  color: var(--muted);
+  backdrop-filter: blur(10px);
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-12px) rotate(5deg);
+  }
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin: 24px 0;
+}
+
+.section-head h2 {
+  font-family: 'Space Grotesk';
+  font-size: clamp(25px, 4vw, 36px);
+  margin: 0 0 8px;
+}
+
+.section-head p {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.counter {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 24px 0 64px;
+}
+
+.card {
+  min-height: 230px;
+  text-align: left;
+  color: var(--text);
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, #171e35dd, #0c1121ee);
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s, border-color .25s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  border-color: #73f0e57a;
+}
+
+.card:before {
+  content: "";
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  right: -45px;
+  top: -45px;
+  background: var(--glow, #73f0e5);
+  opacity: .12;
+  filter: blur(8px);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.emoji {
+  font-size: 29px;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: #ffffff0a;
+  border: 1px solid #ffffff14;
+}
+
+.num {
+  font-size: 11px;
+  color: #8e99ba;
+  letter-spacing: 1px;
+}
+
+.card h3 {
+  font-family: 'Space Grotesk';
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+.open-label {
+  margin-top: auto;
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .6px;
+}
+
+.arrow {
+  float: right;
+  font-size: 18px;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 25px 0 35px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #8f98b8;
+  font-size: 12px;
+}
+
+.view {
+  display: none;
+  padding: 36px 0 70px;
+  animation: appear .35s ease;
+}
+
+.view.active {
+  display: block;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.back {
+  background: #ffffff0b;
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 11px 15px;
+  border-radius: 12px;
+  margin-bottom: 26px;
+}
+
+.detail-hero {
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: linear-gradient(130deg, #192744, #111326 75%);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.detail-hero:after {
+  content: attr(data-symbol);
+  position: absolute;
+  right: 4%;
+  top: 10%;
+  font-size: clamp(90px, 15vw, 170px);
+  opacity: .12;
+}
+
+.detail-icon {
+  font-size: 36px;
+}
+
+.detail-hero h1 {
+  font-size: clamp(35px, 6vw, 58px);
+  letter-spacing: -2px;
+  margin: 14px 0;
+}
+
+.detail-hero p {
+  max-width: 720px;
+  color: #c1c9e0;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.info-box {
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #11172aab;
+}
+
+.info-box h3 {
+  font-family: 'Space Grotesk';
+  font-size: 19px;
+  color: var(--cyan);
+  margin-bottom: 12px;
+}
+
+.info-box p, .info-box li {
+  color: #c3cae0;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.info-box ul {
+  padding-left: 19px;
+  margin-bottom: 0;
+}
+
+.fact {
+  grid-column: 1 / -1;
+  background: linear-gradient(100deg, #132d39, #1c1b3c);
+  border-color: #73f0e533;
+}
+
+.fact h3 {
+  color: #d4fff8;
+}
+
+.end-note {
+  text-align: center;
+  color: #929cba;
+  font-size: 12px;
+  margin-top: 25px;
+}
+
+@media(max-width:760px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 48px;
+  }
+
+  .orbit {
+    min-height: 260px;
+    order: -1;
+  }
+
+  .planet {
+    width: 170px;
+    height: 170px;
+  }
+
+  .planet:before {
+    width: 260px;
+    height: 68px;
+    left: -45px;
+    top: 52px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
+  }
+
+  .card {
+    padding: 17px;
+    min-height: 220px;
+  }
+
+  .card h3 {
+    font-size: 19px;
+  }
+
+  .card p {
+    font-size: 12px;
+  }
+
+  .section-head {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fact {
+    grid-column: auto;
+  }
+
+  h1 {
+    letter-spacing: -2px;
+  }
+
+  footer {
+    flex-direction: column;
+  }
+}
+
+@media(max-width:420px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: 190px;
+  }
+
+  .card-top {
+    margin-bottom: 18px;
+  }
+
+  .hero {
+    padding-top: 34px;
+  }
+
+  .detail-hero {
+    padding: 23px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-icon">✦</span>
+    CIENCIA<span style="color:var(--cyan)">/</span>LAB
+  </div>
+  <span class="tag">Explora · Aprende · Descubre</span>
+</header>
+
+<main id="home">
+
+<section class="hero">
+  <div>
+    <span class="eyebrow"><span class="dot"></span> Tu exposición interactiva</span>
+
+    <h1>
+      El universo<br>
+      de la <span class="gradient">ciencia.</span>
+    </h1>
+
+    <p class="intro">
+      Desde los secretos del espacio hasta la vida microscópica:
+      explora seis grandes temas científicos. Toca una tarjeta para
+      abrir su propia sección y descubrir la información sin distracciones.
+    </p>
+
+    <div class="hero-actions">
+      <button class="btn btn-primary"
+        onclick="document.getElementById('temas').scrollIntoView({behavior:'smooth'})">
+        Explorar temas ↘
+      </button>
+
+      <button class="btn btn-ghost" onclick="openTopic('metodo')">
+        ¿Cómo funciona la ciencia?
+      </button>
+    </div>
+  </div>
+
+  <div class="orbit" aria-label="Ilustración decorativa de un planeta">
+    <div class="planet"></div>
+
+    <div class="orbit-label">
+      ✧ Curiosidad sin límites<br>
+      <span style="color:var(--cyan)">6 temas para explorar</span>
+    </div>
+  </div>
+</section>
+
+<section id="temas">
+  <div class="section-head">
+    <div>
+      <h2>Elige tu próximo descubrimiento</h2>
+      <p>Cada tema se abre en una vista independiente.</p>
+    </div>
+    <span class="counter">01 — 06 / TEMAS</span>
+  </div>
+
+  <div class="grid" id="cards"></div>
+</section>
+
+</main>
+
+<section class="view" id="detail">
+  <button class="back" onclick="goHome()">← Volver a todos los temas</button>
+  <div id="detailContent"></div>
+  <div class="end-note">CIENCIA/LAB · Aprende haciendo preguntas.</div>
+</section>
+
+<footer>
+  <span>CIENCIA/LAB — Exposición interactiva</span>
+  <span>Hecho para aprender · HTML + CSS + JavaScript</span>
+</footer>
+
+</div>
+
+<script>
+const topics = [
+{
+  id: 'universo',
+  n: '01',
+  icon: '🌌',
+  title: 'El universo',
+  short: 'El origen, la expansión y los misterios del cosmos.',
+  color: '#a99bff',
+  symbol: '✦',
+  lead: 'El universo incluye todo lo que existe: el espacio, el tiempo, la materia y la energía. Estudiarlo permite investigar de dónde venimos y cómo podría evolucionar el cosmos.',
+  sections: [
+    ['¿Cómo comenzó?', 'La explicación científica más aceptada es el modelo del Big Bang. Hace aproximadamente 13.8 mil millones de años, el universo se encontraba en un estado extremadamente caliente y denso y comenzó a expandirse. No fue una explosión dentro del espacio: la expansión corresponde al propio espacio.'],
+    ['Galaxias y estrellas', 'Las galaxias son enormes conjuntos de estrellas, gas, polvo y materia oscura. Nuestro sistema solar se encuentra en la Vía Láctea. Las estrellas producen energía mediante reacciones de fusión nuclear en sus núcleos.'],
+    ['¿Cómo lo estudiamos?', 'Los telescopios observan diferentes tipos de luz, desde ondas de radio hasta rayos X. Al estudiar la luz de objetos lejanos, los astrónomos pueden conocer su composición, temperatura y movimiento.']
+  ],
+  fact: 'La luz del Sol tarda unos 8 minutos y 20 segundos en llegar a la Tierra.'
+},
+{
+  id: 'celula',
+  n: '02',
+  icon: '🧬',
+  title: 'La célula',
+  short: 'La unidad básica que forma a los seres vivos.',
+  color: '#73f0e5',
+  symbol: '◎',
+  lead: 'La célula es la unidad básica estructural y funcional de los seres vivos. Algunos organismos tienen una sola célula y otros, como los seres humanos, están formados por billones.',
+  sections: [
+    ['Partes principales', 'La membrana celular regula qué sustancias entran y salen. El citoplasma es el medio donde ocurren muchas reacciones. En las células eucariotas, el núcleo contiene la mayor parte del ADN.'],
+    ['Tipos de células', 'Las células procariotas, como las bacterias, no tienen núcleo rodeado por una membrana. Las eucariotas sí tienen núcleo y pueden formar organismos unicelulares o pluricelulares. Las células vegetales poseen pared celular, cloroplastos y una gran vacuola.'],
+    ['¿Por qué son importantes?', 'Las células obtienen energía, fabrican sustancias, responden al ambiente y se reproducen. Las células especializadas se organizan en tejidos, órganos y sistemas que trabajan en conjunto.']
+  ],
+  fact: 'En el cuerpo humano hay muchos tipos de células especializadas, como neuronas, glóbulos rojos y células musculares.'
+},
+{
+  id: 'ecosistemas',
+  n: '03',
+  icon: '🌱',
+  title: 'Los ecosistemas',
+  short: 'Cómo se relacionan los seres vivos con su ambiente.',
+  color: '#a7ef9b',
+  symbol: '❋',
+  lead: 'Un ecosistema está formado por los seres vivos de un lugar y los componentes no vivos con los que interactúan, como el agua, el aire, el suelo, la luz y la temperatura.',
+  sections: [
+    ['Factores bióticos y abióticos', 'Los factores bióticos son los organismos, como plantas, animales, hongos y bacterias. Los abióticos incluyen la luz solar, el agua, el clima y los minerales. Ambos influyen en la supervivencia de las especies.'],
+    ['Cadenas alimentarias', 'Los productores, como las plantas, captan energía solar. Los consumidores obtienen energía al alimentarse de otros organismos, y los descomponedores reciclan nutrientes al deshacer materia orgánica. La energía fluye y parte se pierde como calor.'],
+    ['Cuidar el equilibrio', 'La contaminación, la destrucción de hábitats, la sobreexplotación y el cambio climático pueden alterar los ecosistemas. Proteger áreas naturales, reducir residuos y usar responsablemente los recursos ayuda a conservar la biodiversidad.']
+  ],
+  fact: 'Los hongos y muchas bacterias son descomponedores esenciales: devuelven nutrientes al suelo y al agua.'
+},
+{
+  id: 'energia',
+  n: '04',
+  icon: '⚡',
+  title: 'La energía',
+  short: 'La capacidad de producir cambios y realizar trabajo.',
+  color: '#ffd47b',
+  symbol: 'ϟ',
+  lead: 'La energía permite que ocurran cambios: mueve objetos, calienta materiales, produce luz y hace posibles los procesos de los seres vivos. No se crea ni se destruye; se transforma y se transfiere.',
+  sections: [
+    ['Formas de energía', 'La energía puede ser cinética (movimiento), potencial (por posición), térmica, química, eléctrica, luminosa o nuclear. Un objeto puede tener varias formas de energía al mismo tiempo.'],
+    ['Transformaciones', 'En una lámpara, la energía eléctrica se transforma en luz y calor. En el cuerpo, la energía química de los alimentos se utiliza para moverse y mantener funciones vitales. Ninguna transformación es totalmente eficiente: parte de la energía se dispersa como calor.'],
+    ['Fuentes renovables', 'La energía solar, eólica, hidráulica y geotérmica provienen de fuentes que se renuevan de manera natural. Los combustibles fósiles almacenan energía química, pero su uso libera gases contaminantes y dióxido de carbono.']
+  ],
+  fact: 'La energía que recibimos del Sol impulsa gran parte del clima, el ciclo del agua y la fotosíntesis.'
+},
+{
+  id: 'cuerpo',
+  n: '05',
+  icon: '🫀',
+  title: 'El cuerpo humano',
+  short: 'Sistemas que colaboran para mantenernos con vida.',
+  color: '#ff9fbd',
+  symbol: '♡',
+  lead: 'El cuerpo humano funciona gracias a la coordinación de células, tejidos, órganos y sistemas. Ninguna parte trabaja completamente aislada: dependen unas de otras para mantener el equilibrio interno.',
+  sections: [
+    ['Sistemas principales', 'El sistema digestivo obtiene nutrientes; el respiratorio intercambia oxígeno y dióxido de carbono; el circulatorio transporta sustancias; y el nervioso recibe información y coordina respuestas.'],
+    ['Homeostasis', 'Es la capacidad del organismo para mantener condiciones internas relativamente estables, como la temperatura corporal y la cantidad de agua. La sudoración, por ejemplo, ayuda a liberar calor cuando el cuerpo se calienta.'],
+    ['Hábitos que ayudan', 'Dormir lo suficiente, comer variado, tomar agua, realizar actividad física adecuada y mantener la higiene contribuyen al bienestar. La prevención y la atención de profesionales de salud también son importantes.']
+  ],
+  fact: 'El corazón bombea sangre continuamente para llevar oxígeno y nutrientes a los tejidos.'
+},
+{
+  id: 'metodo',
+  n: '06',
+  icon: '🔬',
+  title: 'El método científico',
+  short: 'Una forma organizada de investigar preguntas y comprobar ideas.',
+  color: '#91c5ff',
+  symbol: '⌕',
+  lead: 'El método científico reúne estrategias para estudiar fenómenos mediante observaciones, preguntas, pruebas y análisis. No siempre sigue pasos rígidos: el proceso se adapta a la pregunta y a la evidencia disponible.',
+  sections: [
+    ['1. Observar y preguntar', 'Primero se identifica un fenómeno y se formula una pregunta concreta. Por ejemplo: ¿la cantidad de luz influye en el crecimiento de una planta?'],
+    ['2. Proponer y probar', 'Se plantea una hipótesis que pueda ponerse a prueba. Luego se diseña una investigación, se controlan variables importantes y se registran datos de forma ordenada.'],
+    ['3. Analizar y comunicar', 'Los resultados se comparan con la hipótesis. La conclusión debe basarse en los datos, reconocer limitaciones y poder compartirse para que otras personas revisen el procedimiento. Una hipótesis puede modificarse si aparecen nuevas pruebas.']
+  ],
+  fact: 'La ciencia no consiste en adivinar siempre correctamente, sino en poner las ideas a prueba y corregirlas cuando la evidencia lo exige.'
+}
+];
+
+const cards = document.getElementById('cards');
+
+cards.innerHTML = topics.map(t => `
+  <button class="card"
+    style="--glow:${t.color}"
+    onclick="openTopic('${t.id}')"
+    aria-label="Abrir tema ${t.title}">
+
+    <div class="card-top">
+      <span class="emoji">${t.icon}</span>
+      <span class="num">TEMA ${t.n}</span>
+    </div>
+
+    <h3>${t.title}</h3>
+    <p>${t.short}</p>
+
+    <span class="open-label">
+      ABRIR TEMA <span class="arrow">↗</span>
+    </span>
+  </button>
+`).join('');
+
+function openTopic(id) {
+  const t = topics.find(x => x.id === id);
+  if (!t) return;
+
+  document.getElementById('home').style.display = 'none';
+
+    const view = document.getElementById('detail');
+  view.classList.add('active');
+
+  document.getElementById('detailContent').innerHTML = `
+    <div class="detail-hero" data-symbol="${t.symbol}">
+      <div class="detail-icon">${t.icon}</div>
+      <div class="tag">TEMA ${t.n} · CIENCIA/LAB</div>
+      <h1>${t.title}</h1>
+      <p>${t.lead}</p>
+    </div>
+
+    <div class="content-grid">
+      ${t.sections.map(s => `
+        <article class="info-box">
+          <h3>${s[0]}</h3>
+          <p>${s[1]}</p>
+        </article>
+      `).join('')}
+
+      <article class="info-box fact">
+        <h3>✧ Dato interesante</h3>
+        <p>${t.fact}</p>
+      </article>
+    </div>
+  `;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  history.replaceState(null, '', '#' + id);
+}
+
+function goHome() {
+  document.getElementById('detail').classList.remove('active');
+  document.getElementById('home').style.display = 'block';
+
+  history.replaceState(null, '', location.pathname);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('load', () => {
+  const id = location.hash.slice(1);
+
+  if (id && topics.some(t => t.id === id)) {
+    openTopic(id);
+  }
+});
+</script>
+
+</body>
+</html>
+  
